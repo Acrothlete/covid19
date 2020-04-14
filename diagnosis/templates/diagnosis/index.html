@@ -1,0 +1,633 @@
+{%extends "diagnosis/base.html" %}
+{%load static%}
+{%block content%}
+
+
+<!-- start loader -->
+<div id="pageloader-overlay" class="visible incoming">
+    <div class="loader-wrapper-outer">
+        <div class="loader-wrapper-inner">
+            <div class="loader"></div>
+        </div>
+    </div>
+</div>
+<!-- end loader -->
+
+<!-- Start wrapper-->
+<div id="wrapper">
+
+    <!--Start sidebar-wrapper-->
+    <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
+        <div class="brand-logo">
+            <a>
+
+                <h5 class="logo-text">Covid-19 Guidlines</h5>
+            </a>
+        </div>
+        <ul class="sidebar-menu do-nicescrol">
+            <li class="sidebar-header">Precautions</li>
+
+
+            <li>
+                <a>
+                    <i class="zmdi zmdi-invert-colors text-info"></i> <span>Wash hands regularly</span>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <i class="zmdi zmdi-face"></i> <span>Avoid touching face</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'login' %}">
+                    <i class="zmdi zmdi-lock" ></i> <span>Login</span>
+                </a>
+            </li>
+
+            <li>
+                <a>
+                    <i class="zmdi zmdi-account-circle"></i> <span>Maintain distance</span>
+                </a>
+            </li>
+
+            <li>
+                <a>
+                    <i class="zmdi zmdi-airplane-off"></i> <span>Avoid Travelling</span>
+                    <small class="badge float-right badge-light">New</small>
+                </a>
+            </li>
+
+            <li>
+                <a>
+                    <i class="zmdi zmdi-block-alt text-danger"></i> <span>No Smoking</span>
+                </a>
+            </li>
+
+
+
+
+
+            <li>
+                <a>
+                    <i class="zmdi zmdi-cloud-upload"></i> <span>Stay Updated</span>
+                </a>
+            </li>
+
+            <li class="sidebar-header">Responsibilities</li>
+            <li><a href="javaScript:void();"><i class="zmdi zmdi-share text-info"></i> <span>Share
+                        Information</span></a></li>
+            <li><a href="javaScript:void();"><i class="zmdi zmdi-coffee"></i> <span>Stay Safe</span></a></li>
+            <li><a href="javaScript:void();"><i class="zmdi zmdi-mood text-success"></i> <span>Be Positive</span></a>
+            </li>
+
+
+        </ul>
+
+    </div>
+    <!--End sidebar-wrapper-->
+
+
+    <!--Start topbar header-->
+    <header class="topbar-nav">
+        <nav class="navbar navbar-expand fixed-top">
+            <ul class="navbar-nav mr-auto align-items-center">
+                <li class="nav-item">
+                    <a class="nav-link toggle-menu" href="javascript:void();">
+                        <i class="icon-menu menu-icon"></i>
+                    </a>
+                </li>
+
+            </ul>
+
+            <ul class="navbar-nav align-items-center right-nav-link">
+
+                <li class="nav-item">
+                    <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown" href="#">
+                        <span class="user-profile"><img src="{% static 'diagnosis/assets/images/co.png.png'%}"
+                                class="img-circle" alt="user avatar"></span>
+                    </a>
+
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <!--End topbar header-->
+
+    <div class="clearfix"></div>
+
+    <div class="content-wrapper">
+        <div class="container-fluid">
+
+
+
+
+
+
+            {%if report == 1%}
+            <div class="row mt-3">
+                <div class="col-lg-4">
+                    <div class="card profile-card-2">
+                        <div class="card-img-block">
+                            <img class="img-fluid" src="{% static 'diagnosis/assets/images/precaution.jpg'%}"
+                                alt="Card image cap">
+                        </div>
+                        <div class="card-body pt-5">
+                            <img src="{% static 'diagnosis/assets/images/co.png.png'%}" alt="profile-image"
+                                class="profile">
+                            <h5 class="card-title">Mask Stern</h5>
+                            <p class="card-text">We a team of Indian Engineers are trying to build a MACHINE LEANING
+                                predictive model
+                                to identify COVID-19 symptoms.</p>
+                            
+                                <hr>
+                            <div class="form-group">
+                            <button onclick="location.href='{% url 'index' %}'" class="btn btn-light btn-round px-7"> Take Test</button>
+                              </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <!-----------------------bich ka------------------------->
+
+                <div class="col-lg-8">
+                    <a id='view'></a>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <ul class="nav nav-tabs nav-tabs-primary top-icon nav-justified">
+
+                                <li class="nav-item">
+                                    <a href="javascript:void();" data-target="#profile" data-toggle="pill"
+                                        class="nav-link active"><i class="icon-user"></i> <span
+                                            class="hidden-xs"></span>Report</a>
+                                </li>
+
+
+                            </ul>
+                            <div class="tab-content p-3">
+
+                                <div class="tab-pane active" id="profile">
+
+
+
+                                    {%if messages%}
+                                    {%for message in messages%}
+                                    {%if message.tags == "error"%}
+                                    <div class="alert alert-danger alert-dismissible" role="alert">
+                                        {%else%}
+                                        <div class="alert alert-{{message.tags}} alert-dismissible" role="alert">
+                                            {%endif%}
+                                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                            <div class="alert-icon">
+                                                {%if color == "Caution!"%}
+                                                <i class="zmdi zmdi-mood-bad"></i>
+                                                {%else%}
+                                                <i class="zmdi zmdi-mood"></i>
+                                                {%endif%}
+                                            </div>
+                                            <div class="alert-message">
+                                                <span><strong>{{color}}</strong> <br>Your reports.</span>
+                                            </div>
+                                        </div>
+                                        {%endfor%}
+                                        {%endif%}
+
+
+
+
+                                        <h5 class="mb-3">Hello {{name}},</h5>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <!-- <h5>Report</h5> -->
+                                                <p>
+                                                    According to your symptoms, you lie under <a
+                                                        href="javascript:void();"
+                                                        class="badge badge-light badge-pill">"{{zone}}"</a>.
+                                                </p>
+
+                                                <p>
+                                                    Probablity of infection is <a href="javascript:void();"
+                                                        class="badge badge-light badge-pill">{{prob}}%</a>
+                                                </p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h6><strong>We care for you!</strong></h6>
+                                                {%if color != "Congrats!" %}
+                                                <a href="javascript:void();" class="badge badge-dark badge-pill"><i
+                                                        class="zmdi zmdi-account-box-phone"></i> Please visit a doctor.</a>
+                                                    {% else %}
+                                                    <a href="javascript:void();" class="badge badge-dark badge-pill"> <i
+                                                        class="zmdi zmdi-lock"></i> Your in safe.</a>
+                                                    {% endif %}
+                                                <a href="javascript:void();" class="badge badge-dark badge-pill"><i
+                                                        class="zmdi zmdi-account-circle"></i> Practice social
+                                                    distancing.</a>
+                                                
+                                               
+
+                                                <hr>
+
+                                            </div>
+                                            
+                                            <div class="col-md-12">
+                                                {%if color != "Congrats!" %}
+                                                <h5 class="mt-2 mb-3"><span
+                                                        class="fa fa-clock-o ion-clock float-right"></span> 
+                                                </h5>
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover table-striped">
+                                                        <tbody>
+                                                            
+                                                            
+                                                            
+                                                            
+                                                        
+                                                              
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                                {%endif%}
+                                                
+                                                <span class="badge badge-primary"><i class="fa fa-user"></i> {{tests_all}}
+                                                    Reports</span>
+                                                
+                                                <span class="badge badge-danger"><i class="fa fa-eye"></i> {{detected}}
+                                                    Under observation</span>
+                                            </div>
+
+                                        </div>
+                                        <!--/row-->
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+                </div>
+
+
+                {%else%}
+                <div class="row mt-3">
+                    <div class="col-lg-4">
+                        <div class="card profile-card-2">
+                            <div class="card-img-block">
+                                <img class="img-fluid" src="{% static 'diagnosis/assets/images/precaution.jpg'%}"
+                                    alt="Card image cap">
+                            </div>
+                            <div class="card-body pt-5">
+                                <img src="{% static 'diagnosis/assets/images/co.png.png'%}" alt="profile-image"
+                                    class="profile">
+                                <h5 class="card-title">Mask Stern</h5>
+                                <p class="card-text">We a team of Indian Engineers are trying to build a MACHINE LEANING
+                                    predictive model
+                                    to identify COVID-19 symptoms. </p>
+                                <div class="icon-block">
+                                    
+
+
+                                        <hr>
+                                        <div class="form-group">
+                                        <button onclick="location.href='{% url 'index' %}'" class="btn btn-light btn-round px-7"> Take Test</button>
+                                          </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                    <!-----------------------bich ka------------------------->
+                    <div class="col-lg-8">
+                        <div class="card">
+                          <div class="card-body">
+                            <ul class="nav nav-tabs nav-tabs-primary top-icon nav-justified">
+                              <li class="nav-item">
+                                
+                                {% if staff == 1 %}
+                                <a id='msg' href="javascript:void();" data-target="#edit" data-toggle="pill" class="nav-link active"><i
+                                  class="icon-note"> </i> Enter patient details</a>
+                                {%else%}
+                                <a id='msg' href="javascript:void();" data-target="#edit" data-toggle="pill" class="nav-link active"><i
+                                    class="icon-note"> </i> Predict your chances</a>
+                                    {% endif%}
+                              </li>
+              
+              
+                            </ul>
+                            <div class="tab-content p-3">
+                              <div class="tab-pane active" id="edit">
+                                {%if messages%}
+                                          {%for message in messages%}
+                                          <div class="alert alert-danger alert-dismissible" role="alert">
+                                              <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                              <div class="alert-icon">
+                                                <i class="icon-info"></i>
+                                              </div>
+                                              <div class="alert-message">
+                                                <span><strong>{{message}}</strong></span>
+                                              </div>
+                                            </div>
+                                          {%endfor%}
+                                  {%endif%}
+                                  {% if staff == 1 %}
+              
+                                  <form method='POST'>
+                                    {%csrf_token%}
+                                    
+                                    {{ form.not_field_errors }}
+                                    <div class="form-group row">
+                                      <label class="col-lg-3 col-form-label form-control-label">Full name</label>
+                                      <div class="col-lg-9">
+                                        {{ form.name.errors}}
+                                        <input class="form-control" type="text" name="name" required>
+                                      </div>
+                                    </div>
+                                    <div class="form-group row">
+                                      <label class="col-lg-3 col-form-label form-control-label">Mobile number</label>
+                                      <div class="col-lg-9">
+                                        {{ form.number.errors}}
+                                        <input class="form-control" name="number" type="text" pattern="[6-9]{1}[0-9]{9}"
+                                          placeholder="Enter patient mobile number" required>
+                                      </div>
+                                    </div>
+                                   
+                                    <div class="form-group row">
+                                      <label class="col-lg-3 col-form-label form-control-label">Age</label>
+                                      <div class="col-lg-9">
+                                        {{ form.age.errors}}
+                                        <input class="form-control" name="age" type="number" min="1" max="110"
+                                          placeholder="Enter patient age" required>
+                                      </div>
+                                    </div>
+                
+                                    
+                                    <div class="form-group row">
+                                      <label class="col-lg-3 col-form-label form-control-label"></label>
+                                      <div class="col-lg-6">
+                                        {{ form.city.errors}}
+                                        <input class="form-control" name="city" type="text" placeholder="City" required>
+                                      </div>
+                                      <br><br>
+                                      <div class="col-lg-3">
+                                        {{ form.state.errors}}
+                                        <select name="state" name="state" class="form-control" required>
+                                          <option disabled selected value>Select State</option>
+                                          <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                          <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                          <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                          <option value="Assam">Assam</option>
+                                          <option value="Bihar">Bihar</option>
+                                          <option value="Chandigarh">Chandigarh</option>
+                                          <option value="Chhattisgarh">Chhattisgarh</option>
+                                          <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+                                          <option value="Daman and Diu">Daman and Diu</option>
+                                          <option value="Delhi">Delhi</option>
+                                          <option value="Lakshadweep">Lakshadweep</option>
+                                          <option value="Puducherry">Puducherry</option>
+                                          <option value="Goa">Goa</option>
+                                          <option value="Gujarat">Gujarat</option>
+                                          <option value="Haryana">Haryana</option>
+                                          <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                          <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                          <option value="Jharkhand">Jharkhand</option>
+                                          <option value="Karnataka">Karnataka</option>
+                                          <option value="Kerala">Kerala</option>
+                                          <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                          <option value="Maharashtra">Maharashtra</option>
+                                          <option value="Manipur">Manipur</option>
+                                          <option value="Meghalaya">Meghalaya</option>
+                                          <option value="Mizoram">Mizoram</option>
+                                          <option value="Nagaland">Nagaland</option>
+                                          <option value="Odisha">Odisha</option>
+                                          <option value="Punjab">Punjab</option>
+                                          <option value="Rajasthan">Rajasthan</option>
+                                          <option value="Sikkim">Sikkim</option>
+                                          <option value="Tamil Nadu">Tamil Nadu</option>
+                                          <option value="Telangana">Telangana</option>
+                                          <option value="Tripura">Tripura</option>
+                                          <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                          <option value="Uttarakhand">Uttarakhand</option>
+                                          <option value="West Bengal">West Bengal</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                  
+                
+                                    
+                                   
+                                    <div class="form-group row">
+                                      <label class="col-lg-3 col-form-label form-control-label">Patient Status</label>
+                                      <div class="col-lg-9">
+                                        {{ form.patient_status.errors}}
+                                        <select name="patient_status" class="form-control" required>
+                                          <option disabled selected value>Select Status</option>
+                                          <option value="Positive">Positive</option>
+                                          <option value="Saspected">Saspected</option>
+                                          <option value="Nagetive">Nagetive</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    
+                                
+                                 
+                             
+                
+                                    <div class="form-group row">
+                                      <label class="col-lg-3 col-form-label form-control-label"></label>
+                                      <div class="col-lg-9">
+                                        <!-- <input type="reset" class="btn btn-secondary" value="Cancel"> -->
+                                        <input type="submit" class="btn btn-primary" value="Submit">
+                                      </div>
+                                    </div>
+                
+                
+                                  </form>
+                                  {% else %}
+                                  <form method='POST'>
+                                  {%csrf_token%}
+                                  <div class="form-group">
+                                    <div class="icheck-material-white">
+                                      <input type="checkbox" id="bodypain" name="bodypain" value=1>
+              
+                                      <label for="bodypain">
+                                        Get only states reports
+                                      </label>
+                                    </div>
+                                  </div>
+                                 
+     <!-- ------ ------------------------------------------------------------------------------------------------------------------------------- -->
+                                  <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label form-control-label"></label>
+                                    <div class="col-lg-6">
+                                      {{ form.city.errors}}
+                                      <select onchange="print_city('state', this.selectedIndex);" id="sts" name ="state" class="form-control" required></select>
+                                      
+                                    </div>
+                                    <br><br>
+                                    <div class="col-lg-3">
+                                      {{ form.state.errors}}
+                                      <select  id ="state" class="form-control" name="city"required></select>
+                                    </div>
+                                    <script language="javascript">print_state("sts");</script>
+                                  </div>
+                                
+              
+                                 
+                                  
+                                  
+                                 
+                                 
+                                 
+                                  
+              
+                                  <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label form-control-label"></label>
+                                    <div class="col-lg-9">
+                                      <!-- <input type="reset" class="btn btn-secondary" value="Cancel"> -->
+                                      <input type="submit" class="btn btn-primary" value="Generate Report">
+                                    </div>
+                                  </div>
+              
+              
+                                </form>
+                                {% endif %}
+                              </div>
+              
+              
+                            </div>
+                          </div>
+                        </div>
+              
+                      </div>
+
+
+
+
+
+
+                </div>
+                {%endif%}
+                <!--------------------------------------graph start-------------------------------------------->
+
+                <div class="row">
+                    <div class="col-12 col-lg-8 col-xl-8">
+                        <div class="card">
+                            <div class="card-header">Weekly Reports
+
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-inline">
+                                    <li class="list-inline-item"><i class="fa fa-circle mr-2 text-white"></i>Critical
+                                    </li>
+                                    <li class="list-inline-item"><i class="fa fa-circle mr-2 text-light"></i>Total 
+                                    </li>
+                                </ul>
+                                <div class="chart-container-1">
+                                    <canvas id="chart1"></canvas>
+                                </div>
+                            </div>
+
+                            <div class="row m-0 row-group text-center border-top border-light-3">
+                                <div class="col-12 col-lg-4">
+                                    <div class="p-3">
+                                        <h5 class="mb-0">{{globe.cases}}</h5>
+                                        <small class="mb-0">Global Cases <span> <i class="fa fa-arrow-up"></i>
+                                                </span></small>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-4">
+                                    <div class="p-3">
+                                        <h5 class="mb-0">{{globe.deaths}}</h5>
+                                        <small class="mb-0">Global Deaths <span> <i class="fa fa-arrow-up"></i>
+                                                </span></small>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-4">
+                                    <div class="p-3">
+                                        <h5 class="mb-0">{{globe.recovered}}</h5>
+                                        <small class="mb-0">Global Recovered <span> <i class="fa fa-arrow-up"></i>
+                                                </span></small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-4 col-xl-4">
+                        <div class="card">
+                            <div class="card-header">India
+
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container-2">
+                                    <canvas id="chart2"></canvas>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table align-items-center">
+                                    <tbody>
+                                        <tr>
+                                            <td><i class="fa fa-circle text-white mr-2"></i> Screened</td>
+                                            <td>{{india.screened}}</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td><i class="fa fa-circle text-light-1 mr-2"></i>Active</td>
+                                            <td>{{india.active}}</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td><i class="fa fa-circle text-light-2 mr-2"></i>Cured</td>
+                                            <td>{{india.cured}}</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td><i class="fa fa-circle text-light-3 mr-2"></i>Death</td>
+                                            <td>{{india.death}}</td>
+                                            
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End Row-->
+
+                <!-------------------------------------graph end-->
+                <!--start overlay-->
+                <div class="overlay toggle-menu"></div>
+                <!--end overlay-->
+
+            </div>
+            <!-- End container-fluid-->
+        </div>
+        <!--End content-wrapper-->
+        <!--Start Back To Top Button-->
+        <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+        <!--End Back To Top Button-->
+
+        <!--Start footer-->
+
+        <!--End footer-->
+
+
+    </div>
+    <!--End wrapper-->
+    
+    {%endblock content%}

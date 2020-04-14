@@ -1,0 +1,410 @@
+{%extends "diagnosis/base.html" %}
+{%load static%}
+{%block content%}
+<!-- start loader -->
+<div id="pageloader-overlay" class="visible incoming">
+  <div class="loader-wrapper-outer">
+    <div class="loader-wrapper-inner">
+      <div class="loader"></div>
+    </div>
+  </div>
+</div>
+<!-- end loader -->
+
+<!-- Start wrapper-->
+<div id="wrapper">
+
+  <!--Start sidebar-wrapper-->
+  <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
+    <div class="brand-logo">
+      <a>
+
+        <h5 class="logo-text">Covid-19 Guidlines</h5>
+      </a>
+    </div>
+    <ul class="sidebar-menu do-nicescrol">
+      <li class="sidebar-header">Precautions</li>
+
+
+      <li>
+        <a>
+          <i class="zmdi zmdi-invert-colors text-info"></i> <span>Wash hands regularly</span>
+        </a>
+      </li>
+      <li>
+        <a>
+          <i class="zmdi zmdi-face"></i> <span>Avoid touching face</span>
+        </a>
+      </li>
+
+      <li>
+        <a>
+          <i class="zmdi zmdi-lock"></i> <span>Stay at home</span>
+        </a>
+      </li>
+
+      <li>
+        <a>
+          <i class="zmdi zmdi-account-circle"></i> <span>Maintain distance</span>
+        </a>
+      </li>
+
+      <li>
+        <a>
+          <i class="zmdi zmdi-airplane-off"></i> <span>Avoid Travelling</span>
+          <small class="badge float-right badge-light">New</small>
+        </a>
+      </li>
+
+      <li>
+        <a>
+          <i class="zmdi zmdi-block-alt text-danger"></i> <span>No Smoking</span>
+        </a>
+      </li>
+
+
+
+
+
+      <li>
+        <a>
+          <i class="zmdi zmdi-cloud-upload"></i> <span>Stay Updated</span>
+        </a>
+      </li>
+
+      <li class="sidebar-header">Responsibilities</li>
+      <li><a href="javaScript:void();"><i class="zmdi zmdi-share text-info"></i> <span>Share Information</span></a></li>
+      <li><a href="javaScript:void();"><i class="zmdi zmdi-coffee"></i> <span>Stay Safe</span></a></li>
+      <li><a href="javaScript:void();"><i class="zmdi zmdi-mood text-success"></i> <span>Be Positive</span></a></li>
+
+
+    </ul>
+
+  </div>
+  <!--End sidebar-wrapper-->
+
+
+  <!--Start topbar header-->
+  <header class="topbar-nav">
+    <nav class="navbar navbar-expand fixed-top">
+      <ul class="navbar-nav mr-auto align-items-center">
+        <li class="nav-item">
+          <a class="nav-link toggle-menu" href="javascript:void();">
+            <i class="icon-menu menu-icon"></i>
+          </a>
+        </li>
+
+      </ul>
+
+      <ul class="navbar-nav align-items-center right-nav-link">
+
+        <li class="nav-item">
+          <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown" href="#">
+            <span class="user-profile"><img src="{% static 'diagnosis/assets/images/co.png.png'%}" class="img-circle"
+                alt="user avatar"></span>
+          </a>
+
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <!--End topbar header-->
+
+  <div class="clearfix"></div>
+
+  <div class="content-wrapper">
+    <div class="container-fluid">
+
+
+
+
+
+
+
+
+      <div class="row mt-3">
+        <div class="col-lg-4">
+          <div class="card profile-card-2">
+            <div class="card-img-block">
+              <img class="img-fluid" src="{% static 'diagnosis/assets/images/precaution.jpg'%}" alt="Card image cap">
+            </div>
+            <div class="card-body pt-5">
+              <img src="{% static 'diagnosis/assets/images/co.png.png'%}" alt="profile-image" class="profile">
+              <h5 class="card-title">Mask Stern</h5>
+              <p class="card-text">We a team of Indian Engineers are trying to build a MACHINE LEANING predictive model
+                to identify COVID-19 symptoms. <br><br>How you can contribute?.</p>
+              <div class="icon-block">
+                <a href="javascript:void();"><i class="zmdi zmdi-account-box-mail"></i>Fill basic details</a><br>
+                <a href="javascript:void();"> <i class="zmdi zmdi-assignment-alert text-danger"></i>Test
+                  symptoms</a><br>
+                <a href="javascript:void();"> <i class="zmdi zmdi-assignment-check text-info"></i>View report</a><br>
+                <a href="javascript:void();"> <i class="zmdi zmdi-whatsapp text-success"></i>Share it with all</a>
+              </div>
+            </div>
+
+
+          </div>
+
+        </div>
+
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-body">
+              <ul class="nav nav-tabs nav-tabs-primary top-icon nav-justified">
+                <li class="nav-item">
+                  
+                  {% if staff == 1 %}
+                  <a id='msg' href="javascript:void();" data-target="#edit" data-toggle="pill" class="nav-link active"><i
+                    class="icon-note"> </i> Enter patient details</a>
+                  {%else%}
+                  <a id='msg' href="javascript:void();" data-target="#edit" data-toggle="pill" class="nav-link active"><i
+                      class="icon-note"> </i> Predict your chances</a>
+                      {% endif%}
+                </li>
+
+
+              </ul>
+              <div class="tab-content p-3">
+                <div class="tab-pane active" id="edit">
+                  {%if messages%}
+                            {%for message in messages%}
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <div class="alert-icon">
+                                  <i class="icon-info"></i>
+                                </div>
+                                <div class="alert-message">
+                                  <span><strong>{{message}}</strong></span>
+                                </div>
+                              </div>
+                            {%endfor%}
+                    {%endif%}
+                    {% if staff == 1 %}
+
+                    <form method='POST'>
+                      {%csrf_token%}
+                      
+                      {{ form.not_field_errors }}
+                      <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">Full name</label>
+                        <div class="col-lg-9">
+                          {{ form.name.errors}}
+                          <input class="form-control" type="text" name="name" required>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">Mobile number</label>
+                        <div class="col-lg-9">
+                          {{ form.number.errors}}
+                          <input class="form-control" name="number" type="text" pattern="[6-9]{1}[0-9]{9}"
+                            placeholder="Enter patient mobile number" required>
+                        </div>
+                      </div>
+                     
+                      <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">Age</label>
+                        <div class="col-lg-9">
+                          {{ form.age.errors}}
+                          <input class="form-control" name="age" type="number" min="1" max="110"
+                            placeholder="Enter patient age" required>
+                        </div>
+                      </div>
+  
+                      
+                      <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label"></label>
+                        <div class="col-lg-6">
+                          {{ form.city.errors}}
+                          <select onchange="print_city('state', this.selectedIndex);" id="sts" name ="state" class="form-control" required></select>
+                          
+                        </div>
+                        <br><br>
+                        <div class="col-lg-3">
+                          {{ form.state.errors}}
+                          <select  id ="state" class="form-control" name="city"required></select>
+                        </div>
+                        <script language="javascript">print_state("sts");</script>
+                      </div>
+                    
+  
+                      
+                     
+                      <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">Patient Status</label>
+                        <div class="col-lg-9">
+                          {{ form.patient_status.errors}}
+                          <select name="patient_status" class="form-control" required>
+                            <option disabled selected value>Select Status</option>
+                            <option value="Positive">Positive</option>
+                            <option value="Saspected">Saspected</option>
+                            <option value="Nagetive">Nagetive</option>
+                          </select>
+                        </div>
+                      </div>
+                      
+                  
+                   
+               
+  
+                      <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label"></label>
+                        <div class="col-lg-9">
+                          <!-- <input type="reset" class="btn btn-secondary" value="Cancel"> -->
+                          <input type="submit" class="btn btn-primary" value="Submit">
+                        </div>
+                      </div>
+  
+  
+                    </form>
+                    {% else %}
+                    <form method='POST'>
+                    {%csrf_token%}
+                    
+                    <div class="form-group row">
+                      {{ form.name.errors}}
+                      <label class="col-lg-3 col-form-label form-control-label">Full name</label>
+                      <div class="col-lg-9">
+                        <input class="form-control" type="text" name="name" required>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      {{ form.number.errors}}
+                      <label class="col-lg-3 col-form-label form-control-label">Mobile number</label>
+                      <div class="col-lg-9">
+                        <input class="form-control" name="phone" type="text" pattern="[6-9]{1}[0-9]{9}"
+                          placeholder="Enter your mobile number" required>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label class="col-lg-3 col-form-label form-control-label">Age</label>
+                      <div class="col-lg-9">
+                        {{ form.age.errors}}
+                        <input class="form-control" name="age" type="number" min="1" max="110"
+                          placeholder="Enter your age" required>
+                      </div>
+                    </div>
+
+                  
+                    <div class="form-group row">
+                      <label class="col-lg-3 col-form-label form-control-label"></label>
+                      <div class="col-lg-6">
+                        {{ form.city.errors}}
+                        <select onchange="print_city('state', this.selectedIndex);" id="sts" name ="state" class="form-control" required></select>
+                        
+                      </div>
+                      <br><br>
+                      <div class="col-lg-3">
+                        {{ form.state.errors}}
+                        <select  id ="state" class="form-control" name="city"required></select>
+                      </div>
+                      <script language="javascript">print_state("sts");</script>
+                    </div>
+                  
+
+                   
+                    <div class="form-group row">
+                      <label class="col-lg-3 col-form-label form-control-label">Did you travelled ?</label>
+                      <div class="col-lg-9">
+                        {{ form.travel.errors}}
+                        <select name="travelHistory" class="form-control" required>
+                          <option disabled selected value>Your recent travell history</option>
+                          <option value=0>None</option>
+                          <option value=1>National</option>
+                          <option value=2>International</option>
+                          <option value=5>Covid Infected Zone </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-lg-3 col-form-label form-control-label">Fever</label>
+                      <div class="col-lg-9">
+                        {{ form.fever.errors}}
+                        <select name="fever" class="form-control" required>
+                          <option disabled selected value>Mark your temperature</option>
+                          <option value="0">No Fever (98*F)</option>
+                          <option value="1">Mild Fever (100*F)</option>
+                          <option value="3">High Fever (103*F)</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="icheck-material-white">
+                        <input type="checkbox" id="bodypain" name="bodypain" value=1>
+
+                        <label for="bodypain">
+                          Body Pain?
+                        </label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="icheck-material-white">
+                        <input type="checkbox" id="runnynose" name="runnynose" value=1>
+
+                        <label for="runnynose">
+                          Running Nose?
+                        </label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="icheck-material-white">
+                        <input type="checkbox" id="diffbreath" name="diffbreath" value=1>
+
+                        <label for="diffbreath">
+                          Difficulty in breathing?
+                        </label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="icheck-material-white">
+                        <input type="checkbox" id="sorethroat" name="sorethroat" value=1>
+
+                        <label for="sorethroat">
+                          Sore throat?
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-lg-3 col-form-label form-control-label"></label>
+                      <div class="col-lg-9">
+                        <!-- <input type="reset" class="btn btn-secondary" value="Cancel"> -->
+                        <input type="submit" class="btn btn-primary" value="Generate Report">
+                      </div>
+                    </div>
+
+
+                  </form>
+                  {% endif %}
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!---------------------------------------------------------------------------------->
+
+      <!--start overlay-->
+      <div class="overlay toggle-menu"></div>
+      <!--end overlay-->
+
+    </div>
+    <!-- End container-fluid-->
+  </div>
+  <!--End content-wrapper-->
+  <!--Start Back To Top Button-->
+  <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+  <!--End Back To Top Button-->
+
+  <!--Start footer-->
+
+  <!--End footer-->
+
+
+</div>
+<!--End wrapper-->
+
+{%endblock content%}

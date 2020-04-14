@@ -1,0 +1,183 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <meta name="description" content=""/>
+  <meta name="author" content=""/>
+  <title>Covid - 19</title>
+  <!-- loader-->
+  <link href="{% static 'diagnosis/assets/css/pace.min.css'%}" rel="stylesheet"/>
+  <script src="{% static 'diagnosis/assets/js/cities.js'%}"></script>
+  <script src="{% static 'diagnosis/assets/js/pace.min.js'%}"></script>
+  <!--favicon-->
+  <link rel="icon" href="{% static 'diagnosis/assets/images/co.png.png'%}" type="image/x-icon">
+  <!-- simplebar CSS-->
+  <link href="{% static 'diagnosis/assets/plugins/simplebar/css/simplebar.css'%}" rel="stylesheet"/>
+  <!-- Bootstrap core CSS-->
+  <link href="{% static 'diagnosis/assets/css/bootstrap.min.css'%}" rel="stylesheet"/>
+  <!-- animate CSS-->
+  <link href="{% static 'diagnosis/assets/css/animate.css'%}" rel="stylesheet" type="text/css"/>
+  <!-- Icons CSS-->
+  <link href="{% static 'diagnosis/assets/css/icons.css'%}" rel="stylesheet" type="text/css"/>
+  <!-- Sidebar CSS-->
+  <link href="{% static 'diagnosis/assets/css/sidebar-menu.css'%}" rel="stylesheet"/>
+  <!-- Custom Style-->
+  <link href="{% static 'diagnosis/assets/css/app-style.css'%}" rel="stylesheet"/>
+
+  <link rel="icon" href="{% static 'diagnosis/assets/images/favicon.ico'%}" type="image/x-icon">
+  <!-- Vector CSS -->
+  <link href="{% static 'diagnosis/assets/plugins/vectormap/jquery-jvectormap-2.0.2.css'%}" rel="stylesheet"/>
+  <!-- simplebar CSS-->
+  <link href="{% static 'diagnosis/assets/plugins/simplebar/css/simplebar.css'%}" rel="stylesheet"/>
+  <!-- Bootstrap core CSS-->
+  <link href="{% static 'diagnosis/assets/css/bootstrap.min.css'%}" rel="stylesheet"/>
+  <!-- animate CSS-->
+  <link href="{% static 'diagnosis/assets/css/animate.css'%}" rel="stylesheet" type="text/css"/>
+  <!-- Icons CSS-->
+  <link href="{% static 'diagnosis/assets/css/icons.css'%}" rel="stylesheet" type="text/css"/>
+  <!-- Sidebar CSS-->
+  <link href="{% static 'diagnosis/assets/css/sidebar-menu.css'%}" rel="stylesheet"/>
+  <!-- Custom Style-->
+  <link href="{% static 'diagnosis/assets/css/app-style.css'%}" rel="stylesheet"/>
+  
+</head>
+<body class="bg-theme bg-theme2">
+    {%block content%}{%endblock%}
+
+
+
+<!-- Bootstrap core JavaScript-->
+<script src="{% static 'diagnosis/assets/js/jquery.min.js'%}"></script>
+<script src="{% static 'diagnosis/assets/js/popper.min.js'%}"></script>
+<script src="{% static 'diagnosis/assets/js/bootstrap.min.js'%}"></script>
+  
+<!-- simplebar js -->
+<script src="{% static 'diagnosis/assets/plugins/simplebar/js/simplebar.js'%}"></script>
+<!-- sidebar-menu js -->
+<script src="{% static 'diagnosis/assets/js/sidebar-menu.js'%}"></script>
+
+<!-- Custom scripts -->
+<script src="{% static 'diagnosis/assets/js/app-script.js'%}"></script>
+
+
+<!-- loader scripts -->
+<script src="{% static 'diagnosis/assets/js/jquery.loading-indicator.js'%}"></script>
+
+<!-- Chart js -->
+
+<script src="{% static 'diagnosis/assets/plugins/Chart.js/Chart.min.js'%}"></script>
+
+<!-- Index js -->
+<!-- <script src="{% static 'diagnosis/assets/js/index.js'%}"></script> -->
+<script>$(function() {
+  "use strict";
+
+   // chart 1
+ 
+    var ctx = document.getElementById('chart1').getContext('2d');
+    var config={
+      type: 'line',
+      data: {
+        labels:["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"],
+        datasets: [{
+          label: 'Critical Reports',
+          data:  [3, 3, 8, 5, 7, 4, 6, 4, 6, 3],
+          backgroundColor: '#fff',
+          borderColor: "transparent",
+          pointRadius :"0",
+          borderWidth: 3
+        }, {
+          label: 'Total Reports',
+          data:  [7, 5, 14, 7, 12, 6, 10, 6, 11, 5],
+          backgroundColor: "rgba(255, 255, 255, 0.25)",
+          borderColor: "transparent",
+          pointRadius :"0",
+          borderWidth: 1
+        }]
+      },
+    options: {
+      maintainAspectRatio: false,
+      legend: {
+        display: false,
+        labels: {
+        fontColor: '#ddd',  
+        boxWidth:40
+        }
+      },
+      tooltips: {
+        displayColors:false
+      },	
+      scales: {
+        xAxes: [{
+        ticks: {
+          beginAtZero:true,
+          fontColor: '#ddd'
+        },
+        gridLines: {
+          display: true ,
+          color: "rgba(221, 221, 221, 0.08)"
+        },
+        }],
+         yAxes: [{
+        ticks: {
+          beginAtZero:true,
+          fontColor: '#ddd'
+        },
+        gridLines: {
+          display: true ,
+          color: "rgba(221, 221, 221, 0.08)"
+        },
+        }]
+       }
+
+     }
+    }
+    var myChart = new Chart(ctx,config );  
+  
+  
+  // chart 2
+
+  var ctx = document.getElementById("chart2").getContext('2d');
+    var myChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ["Direct", "Affiliate", "E-mail", "Other"],
+        datasets: [{
+          backgroundColor: [
+            "#ffffff",
+            "rgba(255, 255, 255, 0.30)",
+            "rgba(255, 255, 255, 0.10)",
+            "rgba(255, 255, 255, 0.20)"
+          ],
+          data: [5856, 2602, 1802, 1105],
+          borderWidth: [0, 0, 0, 0]
+        }]
+      },
+    options: {
+      maintainAspectRatio: false,
+       legend: {
+       position :"bottom",	
+       display: false,
+          labels: {
+          fontColor: '#ddd',  
+          boxWidth:15
+         }
+      }
+      ,
+      tooltips: {
+        displayColors:false
+      }
+       }
+    });
+  
+
+  
+  
+ });	 
+ </script>
+  
+</body>
+</html>
