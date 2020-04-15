@@ -14,75 +14,60 @@
 <!-- Start wrapper-->
 <div id="wrapper">
 
-  <!--Start sidebar-wrapper-->
-  <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
-    <div class="brand-logo">
-      <a>
+ <!--Start sidebar-wrapper-->
+    <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
+        <div class="brand-logo">
+            <a href="{% url 'index' %}">
 
-        <h5 class="logo-text">Covid-19 Guidlines</h5>
-      </a>
+                <h5 class="logo-text">Covid-19</h5>
+            </a>
+        </div>
+        <ul class="sidebar-menu do-nicescrol">
+
+            {% if request.user.is_authenticated %}
+            <li class="sidebar-header">Accounts</li>
+
+            <li>
+                <a href="{% url 'entry'%}">
+                    <i class="zmdi zmdi-face"></i> <span>Add Patient</span>
+                </a>
+            </li>
+            <li>
+                <a href="{ url 'logout'}">
+                    <i class="zmdi zmdi-lock"></i> <span>Logout</span>
+                </a>
+            </li>
+
+
+
+            {%else%}
+            <li class="sidebar-header"></li>
+            <li>
+                <a href="{% url 'login' %}">
+                    <i class="zmdi zmdi-lock" ></i> <span>Login</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{%url 'test'%}">
+                    <i class="zmdi zmdi-odnoklassniki"></i> <span>Take Test</span>
+                </a>
+            </li>
+            {%endif%}
+
+            <li class="sidebar-header">Responsibilities</li>
+            <li><a href="javaScript:void();"><i class="zmdi zmdi-airplane-off"></i> <span>Avoid Travelling</span></a></li>
+            <li><a href="javaScript:void();"><i class="zmdi zmdi-share text-info"></i> <span>Share
+                        Information</span></a></li>
+            <li><a href="javaScript:void();"><i class="zmdi zmdi-coffee"></i> <span>Stay Safe</span></a></li>
+            <li><a href="javaScript:void();"><i class="zmdi zmdi-mood text-success"></i> <span>Be Positive</span></a>
+            </li>
+
+
+        </ul>
+
     </div>
-    <ul class="sidebar-menu do-nicescrol">
-      <li class="sidebar-header">Precautions</li>
-
-
-      <li>
-        <a>
-          <i class="zmdi zmdi-invert-colors text-info"></i> <span>Wash hands regularly</span>
-        </a>
-      </li>
-      <li>
-        <a>
-          <i class="zmdi zmdi-face"></i> <span>Avoid touching face</span>
-        </a>
-      </li>
-
-      <li>
-        <a>
-          <i class="zmdi zmdi-lock"></i> <span>Stay at home</span>
-        </a>
-      </li>
-
-      <li>
-        <a>
-          <i class="zmdi zmdi-account-circle"></i> <span>Maintain distance</span>
-        </a>
-      </li>
-
-      <li>
-        <a>
-          <i class="zmdi zmdi-airplane-off"></i> <span>Avoid Travelling</span>
-          <small class="badge float-right badge-light">New</small>
-        </a>
-      </li>
-
-      <li>
-        <a>
-          <i class="zmdi zmdi-block-alt text-danger"></i> <span>No Smoking</span>
-        </a>
-      </li>
-
-
-
-
-
-      <li>
-        <a>
-          <i class="zmdi zmdi-cloud-upload"></i> <span>Stay Updated</span>
-        </a>
-      </li>
-
-      <li class="sidebar-header">Responsibilities</li>
-      <li><a href="javaScript:void();"><i class="zmdi zmdi-share text-info"></i> <span>Share Information</span></a></li>
-      <li><a href="javaScript:void();"><i class="zmdi zmdi-coffee"></i> <span>Stay Safe</span></a></li>
-      <li><a href="javaScript:void();"><i class="zmdi zmdi-mood text-success"></i> <span>Be Positive</span></a></li>
-
-
-    </ul>
-
-  </div>
-  <!--End sidebar-wrapper-->
-
+    <!--End sidebar-wrapper-->
 
   <!--Start topbar header-->
   <header class="topbar-nav">
@@ -131,12 +116,12 @@
             <div class="card-body pt-5">
               <img src="{% static 'diagnosis/assets/images/co.png.png'%}" alt="profile-image" class="profile">
               <h5 class="card-title">Mask Stern</h5>
-              <p class="card-text">We a team of Indian Engineers are trying to build a MACHINE LEANING predictive model
-                to identify COVID-19 symptoms. <br><br>How you can contribute?.</p>
+              <p class="card-text">We a team of Indian Engineers are trying to build a model
+                to identify COVID-19 symptoms and patients. <br><br>How you can contribute?.</p>
               <div class="icon-block">
-                <a href="javascript:void();"><i class="zmdi zmdi-account-box-mail"></i>Fill basic details</a><br>
+                <a href="javascript:void();"><i class="zmdi zmdi-account-box-mail"></i>Fill details</a><br>
                 <a href="javascript:void();"> <i class="zmdi zmdi-assignment-alert text-danger"></i>Test
-                  symptoms</a><br>
+                  Symptoms</a><br>
                 <a href="javascript:void();"> <i class="zmdi zmdi-assignment-check text-info"></i>View report</a><br>
                 <a href="javascript:void();"> <i class="zmdi zmdi-whatsapp text-success"></i>Share it with all</a>
               </div>
@@ -152,7 +137,7 @@
             <div class="card-body">
               <ul class="nav nav-tabs nav-tabs-primary top-icon nav-justified">
                 <li class="nav-item">
-                  
+
                   {% if staff == 1 %}
                   <a id='msg' href="javascript:void();" data-target="#edit" data-toggle="pill" class="nav-link active"><i
                     class="icon-note"> </i> Enter patient details</a>
@@ -183,7 +168,7 @@
 
                     <form method='POST'>
                       {%csrf_token%}
-                      
+
                       {{ form.not_field_errors }}
                       <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label">Full name</label>
@@ -200,7 +185,7 @@
                             placeholder="Enter patient mobile number" required>
                         </div>
                       </div>
-                     
+
                       <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label">Age</label>
                         <div class="col-lg-9">
@@ -209,14 +194,14 @@
                             placeholder="Enter patient age" required>
                         </div>
                       </div>
-  
-                      
+
+
                       <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label"></label>
                         <div class="col-lg-6">
                           {{ form.city.errors}}
                           <select onchange="print_city('state', this.selectedIndex);" id="sts" name ="state" class="form-control" required></select>
-                          
+
                         </div>
                         <br><br>
                         <div class="col-lg-3">
@@ -225,10 +210,10 @@
                         </div>
                         <script language="javascript">print_state("sts");</script>
                       </div>
-                    
-  
-                      
-                     
+
+
+
+
                       <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label">Patient Status</label>
                         <div class="col-lg-9">
@@ -236,16 +221,16 @@
                           <select name="patient_status" class="form-control" required>
                             <option disabled selected value>Select Status</option>
                             <option value="Positive">Positive</option>
-                            <option value="Saspected">Saspected</option>
-                            <option value="Nagetive">Nagetive</option>
+                            <option value="Suspected">Suspected</option>
+                            <option value="Negative">Negative</option>
                           </select>
                         </div>
                       </div>
-                      
-                  
-                   
-               
-  
+
+
+
+
+
                       <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label"></label>
                         <div class="col-lg-9">
@@ -253,13 +238,13 @@
                           <input type="submit" class="btn btn-primary" value="Submit">
                         </div>
                       </div>
-  
-  
+
+
                     </form>
                     {% else %}
                     <form method='POST'>
                     {%csrf_token%}
-                    
+
                     <div class="form-group row">
                       {{ form.name.errors}}
                       <label class="col-lg-3 col-form-label form-control-label">Full name</label>
@@ -275,7 +260,7 @@
                           placeholder="Enter your mobile number" required>
                       </div>
                     </div>
-                    
+
                     <div class="form-group row">
                       <label class="col-lg-3 col-form-label form-control-label">Age</label>
                       <div class="col-lg-9">
@@ -285,13 +270,13 @@
                       </div>
                     </div>
 
-                  
+
                     <div class="form-group row">
                       <label class="col-lg-3 col-form-label form-control-label"></label>
                       <div class="col-lg-6">
                         {{ form.city.errors}}
                         <select onchange="print_city('state', this.selectedIndex);" id="sts" name ="state" class="form-control" required></select>
-                        
+
                       </div>
                       <br><br>
                       <div class="col-lg-3">
@@ -300,9 +285,9 @@
                       </div>
                       <script language="javascript">print_state("sts");</script>
                     </div>
-                  
 
-                   
+
+
                     <div class="form-group row">
                       <label class="col-lg-3 col-form-label form-control-label">Did you travelled ?</label>
                       <div class="col-lg-9">

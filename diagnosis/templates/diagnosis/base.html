@@ -81,17 +81,20 @@
     var config={
       type: 'line',
       data: {
-        labels:["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"],
+        labels:{{ state_name | safe }},
+        // ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"],
         datasets: [{
-          label: 'Critical Reports',
-          data:  [3, 3, 8, 5, 7, 4, 6, 4, 6, 3],
-          backgroundColor: '#fff',
+          label: 'Offical Reports',
+          data: {{offical_value | safe}}, 
+          // [3, 3, 8, 5, 7, 4, 6, 4, 6, 3,8,2,3,6,7,10,36,],
+          backgroundColor: 'rgba(255, 255, 255, 0.75)',
           borderColor: "transparent",
           pointRadius :"0",
           borderWidth: 3
         }, {
-          label: 'Total Reports',
-          data:  [7, 5, 14, 7, 12, 6, 10, 6, 11, 5],
+          label: 'Test Reports',
+          data: {{ local_value | safe }},  
+          // [7, 5, 14, 7, 12, 6, 10, 6, 11, 5,5,7,8,9,3,1,2,5],
           backgroundColor: "rgba(255, 255, 255, 0.25)",
           borderColor: "transparent",
           pointRadius :"0",
@@ -144,7 +147,7 @@
     var myChart = new Chart(ctx, {
       type: 'doughnut',
       data: {
-        labels: ["Direct", "Affiliate", "E-mail", "Other"],
+        labels: ["Screened (Official)", "Positive (Official)", "Total (Analyzed)", "Positive(Anaylzed)"],
         datasets: [{
           backgroundColor: [
             "#ffffff",
@@ -152,7 +155,8 @@
             "rgba(255, 255, 255, 0.10)",
             "rgba(255, 255, 255, 0.20)"
           ],
-          data: [5856, 2602, 1802, 1105],
+          data: {{circular_data |safe}},
+          //  [5856, 2602, 1802, 1105],
           borderWidth: [0, 0, 0, 0]
         }]
       },

@@ -7,37 +7,80 @@ from django.http import Http404
 from diagnosis.models import data_base,Patient_data
 # Create your views here.
 
-india_states= ["Andhra Pradesh","Arunachal Pradesh ","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal Pradesh","Jammu and Kashmir","Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal","Andaman and Nicobar Islands","Chandigarh","Dadra and Nagar Haveli","Daman and Diu","Lakshadweep","National Capital Territory of Delhi","Puducherry"]
+
+
+State_short=[('KA', 'Karnataka'), ('AP', 'Andhra Pradesh'), ('KL', 'Kerala'), ('TN', 'Tamil Nadu'), ('MH', 'Maharashtra'), ('UP', 'Uttar Pradesh'), ('GA', 'Goa'), ('GJ', 'Gujarat'), ('RJ', 'Rajasthan'), ('HP', 'Himachal Pradesh'), ('JK', 'Jammu & Kashmir'), ('TG', 'Telangana'), ('AR', 'Arunachal Pradesh'), ('AS', 'Assam'), ('BR', 'Bihar'), ('CG', 'Chattisgarh'), ('HR', 'Haryana'), ('JH', 'Jharkhand'), ('MP', 'Madhya Pradesh'), ('MN', 'Manipur'), ('ML', 'Meghalaya'), ('MZ', 'Mizoram'), ('NL', 'Nagaland'), ('OR', 'Orissa'), ('PB', 'Punjab'), ('SK', 'Sikkim'), ('TR', 'Tripura'), ('UA', 'Uttarakhand'), ('WB', 'West Bengal'), ('AN', 'Andaman & Nicobar'), ('CH', 'Chandigarh'), ('DN', 'Dadra & Nagar Haveli'), ('DD', 'Daman & Diu'), ('DL', 'Delhi'), ('LD', 'Lakshadweep'), ('PY', 'Pondicherry')]
+
+
 
 def India_Covid():
-    covid_Values = []
-    for i in india_states:
-        try:
-            covid_Values.append(Patient_data.objects.filter(state = i).count())
-        except:
-            pass
-    return covid_Values
+    x = []
+    y=[]
+    for i in State_short:
+        # try:
+        state=str(i[1])
+        x.append(Patient_data.objects.filter(state = state).count())
+        y.append(data_base.objects.filter(state = state).count())
+        # except
+    return [x,y]
 
+
+def India_circle():
+    offical_city_total=Patient_data.objects.all().count()
+    offical_city_found=Patient_data.objects.filter(patient_status = 'Positive').count()
+    local_city_total=data_base.objects.all().count()
+    local_city_found=data_base.objects.filter(infectionProb__gt = 50).count()
+    circular_data=[offical_city_total,offical_city_found,local_city_total,local_city_found]
+    return circular_data    
 
 
 
 def index(request):
-    
+    state_name=[]
+    for i in State_short:
+        state_name.append(i[0])
     if request.method=='POST':
-        state=request.POST.get('state')
-        city=request.POST.get('city')
+        state=str(request.POST.get('state'))
+        city=str(request.POST.get('city')).strip()
         form = ZoneSelect(request.POST)
         if form.is_valid():
-            circle_total=Patient_data.objects.filter(state = state, city=city).count()
-            pass
+            # try:
+
+            ofct=Patient_data.objects.filter(state = state, city = city).count()
+            ofcf=Patient_data.objects.filter(state = state , city = city, patient_status = 'Positive').count()
+            lct=data_base.objects.filter(state = state, city = city).count()
+            lcf=data_base.objects.filter(state = state, city = city,infectionProb__gt = 50).count()
+            heading = city
+            circular_data=[ofct,ofcf,lct,lcf]
+            context= {
+                'heading':heading,
+                'chart': 1,
+                'circular_data':circular_data,
+                'state_name': state_name,
+                'offical_value': India_Covid()[0],
+                'local_value': India_Covid()[1],
+                'form':form,
+                'report': 0
+            }
+            return render(request,'diagnosis/index.html',context)
+            # except:
+            # messages.success(request,f' Please enter valid input.')
         else:
-            print("form invalid")
+            pass
+            
     else:
         form=ZoneSelect()
-    context={
-        'form':form,
-        'report': 0
-    }
+        
+        context= {
+                'heading':'India',
+                'chart': 1,
+                'circular_data':India_circle(),
+                'state_name': state_name,
+                'offical_value': India_Covid()[0],
+                'local_value': India_Covid()[1],
+                'form':form,
+                'report': 0
+            }
     return render(request,'diagnosis/index.html',context)
 
 
@@ -82,7 +125,6 @@ def TestCovid(request):
             if (sorethroat):obj.soreThroat=sorethroat
             inf_prob=(int(obj.soreThroat) *8)+(int(obj.runningNose)*8)+(int(obj.bodyPain)*8)+(int(obj.difficulty_Breathing)*8)+(int(obj.fever)*8)+(int(obj.travelHistory)*7)
             obj.infectionProb=inf_prob
-            print(inf_prob)
             obj.save()
             zone=''
             color=''

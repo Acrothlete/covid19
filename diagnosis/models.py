@@ -35,8 +35,8 @@ class data_base(models.Model):
 
 patient_choice = (
     ('Positive', 'Positive'),
-    ('Saspected', 'Saspected'),
-    ('Nagetive', 'Nagetive'),
+    ('Suspected', 'Suspected'),
+    ('Negative', 'Negative'),
 )
 
 class Patient_data(models.Model):
